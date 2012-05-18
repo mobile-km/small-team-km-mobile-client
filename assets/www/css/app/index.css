@@ -1,0 +1,48 @@
+.ui-page{
+	position: absolute;
+	display: block;
+	height:100%;
+	width:100%;
+}
+
+.ui-page-content{
+	padding: 15px;
+}
+
+.ui-page-header{
+	left: 0;
+  right: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+}
+
+.ui-input-text{
+  padding: .4em;
+  line-height: 1.4;
+  font-size: 16px;
+  width: 97%;
+  outline: 0;
+	display: inline-block;
+}
+.ui-input-password{
+	padding: .4em;
+  line-height: 1.4;
+  font-size: 16px;
+  width: 97%;
+  outline: 0;
+}
+.ui-btn{
+	padding: .6em 20px;
+  min-width: .75em;
+  display: block;
+}
+
+label {
+  position: absolute !important;
+  left: -9999px;
+}
+
+fieldset{
+	border-width: 0;
+}
