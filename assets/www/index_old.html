@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>载入</title>
+    <script type="text/javascript" charset="utf-8" src="js/cordova-1.7.0.js"></script>
+    <link rel="stylesheet" href="css/app/index.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/hogan.js"></script>
+    <script src="js/app/auth.js"></script>
+    <script src="js/app/index.js"></script>
+    <script src="js/app/database.js"></script>
+    <script id="login-page-template" type="text/hogan">
+      <div class="ui-page-content">
+	<form class="login-form" action="http://192.168.1.28:9527/login" method="post">
+	  <div class="errors" style="color:red;display:none;">
+	    用户名或者密码错误！
+	  </div>
+	  <fieldset>
+	    <label for="email">
+	      Email
+	    </label>
+	    <input class="ui-input-text" type="text" name="email" placeholder="用户名/Email">
+	  </fieldset>
+	  <fieldset>
+	    <label for="password">
+	      密码
+	    </label>
+	    <input class="ui-input-password" type="password" name="password" placeholder="密码">
+	  </fieldset>
+	  <span class="ui-btn submit">登陆</span>
+	</form>
+      </div>
+
+    </script>
+    <script id="profile-page-template" type="text/hogan">
+      <div class="ui-page-header">
+        {{name}}
+      </div>
+      <div class="ui-page-content">
+        <button id="new-text">新建文本</button>
+        <button id="from-album">从相册</button>
+        <button id="from-camera">拍照</button>
+        <ul>
+        {{#notes}}
+          <li class="note" data-id="{{id}}">{{content}}</li>
+        {{/notes}}
+        </ul>
+      </div>
+    </script>
+    <script id="new-text-page-template" type="text/hogan">
+      <div class="ui-page-header">
+        新建文本
+      </div>
+      <div class="ui-page-content">
+        <textarea name="content" data-id="{{#id}}{{id}}{{/id}}">{{#content}}{{content}}{{/content}}</textarea>
+        <button id="submit-text{{#id}}-editing{{/id}}">确定</button>
+        <button id="cancel-text">取消</button>
+      </div>
+    </script>
+  </head>
+  <body>
+    <div id="main-page" class="ui-page">
+      <div class="ui-page-content">
+        loading
+      </div>
+    </div>
+  </body>
+</html>
