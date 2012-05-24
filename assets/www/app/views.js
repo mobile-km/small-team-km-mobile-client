@@ -105,7 +105,8 @@ function(
 
     NewTextPage: App.MainView.extend({
       events: {
-        'click #submit-text': 'click_submit_text'
+        'click #submit-text': 'click_submit_text',
+        'click #cancel-text': 'click_cancel_text'
       },
 
       template: NewTextTemplate,
@@ -120,7 +121,10 @@ function(
         var content = jQuery('textarea').val();
         var notes = new App.collections.Notes;
         var note = notes.create({content:content});
-        note.save();
+        App.router.navigate('profile', {trigger: true});
+      },
+
+      click_cancel_text: function() {
         App.router.navigate('profile', {trigger: true});
       }
 
