@@ -97,7 +97,7 @@ define(['backbone', 'app'], function(Backbone, App) {
       return;
     }
     
-    success = function (tx, res) {
+    collection_success = function (tx, res) {
       var len = res.rows.length,result, i;
       if (len > 0) {
 	result = [];
@@ -109,6 +109,17 @@ define(['backbone', 'app'], function(Backbone, App) {
       
       options.success(result);
     };
+
+     model_success = function (tx, res) {
+      var len = res.rows.length,result;
+
+      if (len > 0) {
+	result = JSON.parse(res.rows.item(0).value);
+      } 
+      
+      options.success(result);
+    };
+
     error = function (tx,error) {
       console.error("sql error");
       console.error(error);
@@ -116,14 +127,15 @@ define(['backbone', 'app'], function(Backbone, App) {
       options.error(error);
     };
     
+    console.log('>>>>>dubadu', model);
     switch(method) {
-    case "read":	(model.id ? store.find(model,success,error) : store.findAll(model, success, error)); 
+    case "read":	(model.id ? store.find(model,model_success,error) : store.findAll(model, collection_success, error)); 
       break;
-    case "create":	store.create(model,success,error);
+    case "create":	store.create(model,model_success,error);
       break;
-    case "update":	store.update(model,success,error);
+    case "update":	store.update(model,model_success,error);
       break;
-    case "delete":	store.destroy(model,success,error);
+    case "delete":	store.destroy(model,model_success,error);
       break;
     default:
       console.log(method);

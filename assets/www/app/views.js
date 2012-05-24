@@ -72,29 +72,39 @@ function(
 
     ProfilePage: App.MainView.extend( {
       events: {
-        'click #new-text': 'click_new_text'
+        'click #new-text': 'click_new_text',
+        'click .note'    : 'click_edit_text'
       },
 
       initialize: function() {
         this.notes = new App.collections.Notes;
-        this.notes.on('all', this.add_all, this);
-        this.notes.fetch();
       },
 
       template: ProfileTemplate,
 
       render: function() {
-        var notes = this.notes.map(function(model){
-          return model.attributes;
+        var self = this;
+        this.notes.fetch({
+          success: function() {
+            var notes = self.notes.map(function(model){
+              return model.toJSON();
+            });
+            
+            self.$el.html(self.template.render({notes: notes}));
+          }
         });
-        
-        this.$el.html(this.template.render({notes: notes}));
+
         return this;
       },
 
       click_new_text: function() {
         console.log('也猜猜我吧new_')
         App.router.navigate('new_text', {trigger: true});
+      },
+
+      click_edit_text: function(e) {
+        var _id = $(e.currentTarget).data('id');
+        App.router.navigate('edit_text/' + _id, {trigger: true});
       },
 
       add_all: function() {
@@ -138,10 +148,22 @@ function(
 
       template: EditTextTemplate,
 
+      initialize: function(options) {
+        this.note_id = options.note_id;
+        this.note = new App.models.Note({id: this.note_id});
+        this.note.fetch();
+        console.log(this.note);
+      },
+
       render: function() {
-        var _id = jQuery('textarea').data('id');
-        var note = (new Note({id: _id})).fetch().attributes;
-        this.$el.html(this.template.render(note));
+        var self = this;
+        var note = new App.models.Note({id: this.note_id});
+        note.fetch({
+          silent: true,
+          success: function() {
+            self.$el.html(self.template.render(note.toJSON()));
+          }
+        });
         return this;
       },
 

@@ -5,10 +5,11 @@ function(Backbone, App, auth, jQuery) {
 
   var Router = Backbone.Router.extend({
     routes: {
-      ''        : 'root',
-      'login'   : 'login',
-      'profile' : 'profile',
-      'new_text': 'new_text'
+      ''                  : 'root',
+      'login'             : 'login',
+      'profile'           : 'profile',
+      'new_text'          : 'new_text',
+      'edit_text/:note_id': 'edit_text'
     },
 
     root: function() {
@@ -41,6 +42,11 @@ function(Backbone, App, auth, jQuery) {
     new_text: function() {
       var new_text_page = new App.views.NewTextPage;
       new_text_page.render_view();
+    },
+
+    edit_text: function(note_id) {
+      var edit_text_page = new App.views.EditTextPage({note_id: note_id});
+      edit_text_page.render_view();
     }
 
 
