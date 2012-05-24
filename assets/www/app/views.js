@@ -4,11 +4,12 @@ define(
  'ht!templates/login.html',
  'ht!templates/profile.html',
  'ht!templates/new_text.html',
+ 'ht!templates/edit_text.html',
  'models'],
 function(
   Backbone, App, auth, 
   LoadingTemplate, LoginTemplate, ProfileTemplate,
-  NewTextTemplate) {
+  NewTextTemplate, EditTextTemplate) {
 
 
   App.MainView = Backbone.View.extend({
@@ -127,7 +128,33 @@ function(
       click_cancel_text: function() {
         App.router.navigate('profile', {trigger: true});
       }
+    }),
 
+    EditTextPage: App.MainView.extend({
+      events: {
+        'click #submit-text': 'click_submit_text',
+        'click #cancel-text': 'click_cancel_text'
+      },
+
+      template: EditTextTemplate,
+
+      render: function() {
+        var _id = jQuery('textarea').data('id');
+        var note = (new Note({id: _id})).fetch().attributes;
+        this.$el.html(this.template.render(note));
+        return this;
+      },
+
+      click_submit_text: function() {
+        console.log('猜猜我运行了几次');
+        var content = jQuery('textarea').val();
+        var note = note.save({content:content});
+        App.router.navigate('profile', {trigger: true});
+      },
+
+      click_cancel_text: function() {
+        App.router.navigate('profile', {trigger: true});
+      }
     })
 
 

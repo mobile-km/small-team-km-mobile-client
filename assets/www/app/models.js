@@ -3,11 +3,16 @@ define(
 function(Backbone, App) {
   App.db = openDatabase('notes', '1.0', 'notes', 1024*1024);
   var Note = Backbone.Model.extend({
+    store: new App.WebSQLStore(App.db, 'notes'),
     validate: function(attrs) {
       if (!attrs.content) {
         this.trigger('error');
-        throw 'content should not be empty!';
+        return 'content should not be empty!';
       }
+    },
+    parse: function(a){
+      console.log('parse', arguments);
+      return a;
     }
   });
 

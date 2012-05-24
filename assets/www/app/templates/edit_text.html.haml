@@ -1,0 +1,7 @@
+.ui-page-header 新建文本
+.ui-page-content
+  .error{:style => 'color:red;display:none;'} 内容不能为空! 
+  %textarea{:name      => 'content',
+            :'data-id' => "{{id}}"} {{content}}
+  %button#submit-text 确定
+  %button#cancel-text 取消
